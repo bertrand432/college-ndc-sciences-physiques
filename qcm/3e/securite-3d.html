@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="20 questions pour les 3D SEGPA : pictogrammes de danger, risques et moyens de protection.">
+  <title>QCM 3D SEGPA - Dangers et protections</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/quiz-3d-securite.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <strong>Collège NDC — Sciences Physiques</strong>
+      <a href="index.html">← Retour aux QCM de 3e</a>
+    </div>
+  </div>
+  <main class="page">
+    <div class="page-title">
+      <span class="section-kicker">3D SEGPA • QCM</span>
+      <h1>Dangers et protections</h1>
+      <p>20 questions pour reconnaître les pictogrammes et apprendre à se protéger.</p>
+      <p>Choisis une seule réponse, puis lis l’explication.</p>
+    </div>
+    <section class="quiz-card" id="quiz" aria-label="Questionnaire">
+      <div class="quiz-progress" id="progress"></div>
+      <div class="section-kicker" id="category"></div>
+      <h2 class="question-title" id="question" tabindex="-1"></h2>
+      <img id="pictogramme" class="quiz-pictogramme" alt="" hidden>
+      <div class="answers" id="answers" role="group" aria-labelledby="question"></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="nextBtn" style="display:none;">Question suivante</button>
+      </div>
+    </section>
+    <noscript><p>Active JavaScript dans ton navigateur pour répondre au QCM.</p></noscript>
+  </main>
+  <script src="../../js/quiz-3d-securite.js"></script>
+</body>
+</html>
