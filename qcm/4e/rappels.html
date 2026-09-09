@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="30 questions pour réviser les notions de 5e en classe de 4e.">
+  <title>QCM 4e - Rappels de physique-chimie</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/quiz-4e-rappels.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <strong>Collège NDC — Sciences Physiques</strong>
+      <a href="index.html">← Retour aux QCM de 4e</a>
+    </div>
+  </div>
+  <main class="page">
+    <div class="page-title">
+      <span class="section-kicker">4e • QCM</span>
+      <h1>Rappels de physique-chimie</h1>
+      <p>30 questions sur l’eau, les mélanges, les circuits, la lumière et l’astronomie.</p>
+      <p>Choisis une seule réponse, puis lis l’explication.</p>
+    </div>
+    <section class="quiz-card" id="quiz" aria-label="Questionnaire">
+      <div class="quiz-progress" id="progress"></div>
+      <div class="section-kicker" id="category"></div>
+      <h2 class="question-title" id="question" tabindex="-1"></h2>
+      <figure id="schema-figure" hidden>
+        <a id="schema-link" target="_blank" rel="noopener" aria-label="Agrandir le schéma dans un nouvel onglet">
+          <img id="schema" alt="" hidden>
+          <span>Agrandir le schéma (nouvel onglet)</span>
+        </a>
+      </figure>
+      <div class="answers" id="answers" role="group" aria-labelledby="question"></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="nextBtn" style="display:none;">Question suivante</button>
+      </div>
+    </section>
+    <noscript><p>Active JavaScript dans ton navigateur pour répondre au QCM.</p></noscript>
+  </main>
+  <script src="../../js/quiz-4e-rappels.js"></script>
+</body>
+</html>
