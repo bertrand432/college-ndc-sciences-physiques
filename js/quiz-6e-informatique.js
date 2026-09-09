@@ -232,6 +232,11 @@ const questions = [
   }
 ];
 
+// Each round contains only the questions still to practise.
+let activeQuestions = questions.slice();
+let missedQuestions = [];
+let remediationRound = 0;
+let initialScore = null;
 let currentQuestion = 0;
 let score = 0;
 let answered = false;
@@ -246,6 +251,11 @@ const answersEl = document.getElementById("answers");
 const feedbackEl = document.getElementById("feedback");
 const nextBtn = document.getElementById("nextBtn");
 const quizEl = document.getElementById("quiz");
+// Keep the quiz DOM and its listeners intact when showing the result.
+const resultEl = document.createElement("section");
+resultEl.className = "quiz-card";
+resultEl.hidden = true;
+quizEl.after(resultEl);
 
 function showQuestion() {
   answered = false;
@@ -253,8 +263,8 @@ function showQuestion() {
   feedbackEl.innerHTML = "";
   nextBtn.style.display = "none";
 
-  const q = questions[currentQuestion];
-  progressEl.textContent = `Question ${currentQuestion + 1} sur ${questions.length} — Score : ${score}`;
+  const q = activeQuestions[currentQuestion];
+  progressEl.textContent = `${remediationRound ? "Remédiation — " : ""}Question ${currentQuestion + 1} sur ${activeQuestions.length} — Score : ${score}`;
   questionEl.textContent = q.question;
   categoryEl.textContent = q.category;
   figureEl.hidden = !q.image;
@@ -284,7 +294,7 @@ function selectAnswer(index, selectedButton) {
   if (answered) return;
   answered = true;
 
-  const q = questions[currentQuestion];
+  const q = activeQuestions[currentQuestion];
   const buttons = [...document.querySelectorAll(".answer-btn")];
 
   buttons.forEach((button, i) => {
@@ -296,34 +306,64 @@ function selectAnswer(index, selectedButton) {
     score++;
     feedbackEl.innerHTML = `<strong>Bonne réponse !</strong><br>${q.explanation}`;
   } else {
+    missedQuestions.push(q);
     selectedButton.classList.add("wrong");
     feedbackEl.innerHTML = `<strong>Réponse incorrecte.</strong><br>Bonne réponse : ${q.answers[q.correct]}<br>${q.explanation}`;
   }
 
   feedbackEl.classList.add("show");
-  nextBtn.textContent = currentQuestion === questions.length - 1 ? "Voir mon résultat" : "Question suivante";
+  nextBtn.textContent = currentQuestion === activeQuestions.length - 1 ? "Voir mon résultat" : "Question suivante";
   nextBtn.style.display = "inline-block";
 }
 
 nextBtn.addEventListener("click", () => {
   if (!answered) return;
   currentQuestion++;
-  if (currentQuestion < questions.length) showQuestion();
+  if (currentQuestion < activeQuestions.length) showQuestion();
   else showResult();
 });
 
 function showResult() {
-  const percentage = Math.round((score / questions.length) * 100);
-  quizEl.innerHTML = `
+  answered = false;
+  if (remediationRound === 0) initialScore = score;
+  const percentage = Math.round((score / activeQuestions.length) * 100);
+  const remaining = missedQuestions.length;
+  quizEl.hidden = true;
+  resultEl.hidden = false;
+  resultEl.innerHTML = `
     <div class="result">
-      <span class="section-kicker">Résultat</span>
-      <h2 id="result-title" tabindex="-1">QCM terminé</h2>
-      <div class="result-score">${score} / ${questions.length}</div>
-      <p>Tu as obtenu <strong>${percentage} %</strong> de bonnes réponses.</p>
-      <p>${getMessage(percentage)}</p>
-      <button class="btn btn-secondary" onclick="location.reload()">Recommencer le QCM</button>
+      <span class="section-kicker">${remediationRound ? "Remédiation" : "Résultat"}</span>
+      <h2 id="result-title" tabindex="-1">${remediationRound ? "Remédiation terminée" : "QCM terminé"}</h2>
+      <div class="result-score">${score} / ${activeQuestions.length}</div>
+      <p>Tu as obtenu <strong>${percentage} %</strong> de bonnes réponses${remediationRound ? " pendant cette remédiation" : ""}.</p>
+      ${remediationRound ? `<p>Ton score au QCM initial : <strong>${initialScore} / ${questions.length}</strong>.</p>` : `<p>${getMessage(percentage)}</p>`}
+      <p>${remaining
+        ? `${remaining} question${remaining > 1 ? "s restent" : " reste"} à revoir. La remédiation reprend uniquement tes réponses incorrectes.`
+        : "Bravo ! Tu as répondu correctement à toutes les questions de ce parcours."}</p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;">
+        ${remaining ? '<button class="btn btn-secondary" id="remediationBtn">Remédiation</button>' : ""}
+        <button class="btn btn-secondary" id="restartBtn">Recommencer le QCM complet</button>
+      </div>
     </div>`;
+  if (remaining) document.getElementById("remediationBtn").addEventListener("click", startRemediation);
+  document.getElementById("restartBtn").addEventListener("click", () => location.reload());
   document.getElementById("result-title").focus();
+}
+
+function startRemediation() {
+  if (!missedQuestions.length || resultEl.hidden) return;
+  activeQuestions = missedQuestions.slice();
+  missedQuestions = [];
+  remediationRound++;
+  currentQuestion = 0;
+  score = 0;
+  answered = false;
+  resultEl.hidden = true;
+  resultEl.innerHTML = "";
+  quizEl.hidden = false;
+  showQuestion();
+  questionEl.setAttribute("tabindex", "-1");
+  questionEl.focus();
 }
 
 function getMessage(percentage) {
