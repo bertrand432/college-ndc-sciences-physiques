@@ -1,0 +1,18 @@
+#schema-figure { margin: 0 0 24px; }
+#schema-figure[hidden], #schema[hidden] { display: none; }
+#schema { display: block; width: 100%; height: auto; background: white; }
+#schema-link { display: block; color: var(--primary); text-align: center; }
+#schema-link span { display: inline-block; padding: 10px; }
+.question-title { font-weight: 600; line-height: 1.5; }
+.answer-btn { line-height: 1.5; }
+.answer-btn:disabled { cursor: default; opacity: 1; }
+.answer-btn:focus-visible, .btn:focus-visible, a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .page { padding: 28px 14px 50px; }
+  .page-title h1 { font-size: 1.8rem; }
+  .quiz-card { padding: 20px 16px; }
+  .section-kicker { letter-spacing: 0.08em; }
+}
