@@ -1,0 +1,23 @@
+.question-title { font-weight: 600; line-height: 1.5; }
+.answer-btn { line-height: 1.5; }
+.answer-btn:disabled { cursor: default; opacity: 1; }
+.answer-btn:focus-visible, .btn:focus-visible, a:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .page { padding: 28px 14px 50px; }
+  .page-title h1 { font-size: 1.8rem; }
+  .quiz-card { padding: 20px 16px; }
+  .section-kicker { letter-spacing: 0.08em; }
+}
+
+.quiz-illustrations { display:grid; gap:18px; margin:0 0 24px; }
+.quiz-illustrations[hidden] { display:none; }
+.quiz-illustrations figure { margin:0; padding:12px; border:1px solid var(--border); border-radius:12px; text-align:center; }
+.quiz-illustrations figcaption { font-weight:700; margin-bottom:10px; }
+.quiz-illustrations img { display:block; max-width:100%; width:auto; max-height:360px; height:auto; margin:auto; object-fit:contain; }
+@media (min-width:650px) {
+  .quiz-illustrations:has(figure:nth-child(2)) { grid-template-columns:1fr 1fr; }
+  .quiz-illustrations:has(figure:nth-child(3)) figure:first-child { grid-column:1 / -1; }
+}
