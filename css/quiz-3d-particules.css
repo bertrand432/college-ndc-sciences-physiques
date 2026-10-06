@@ -1,0 +1,18 @@
+[hidden] { display: none !important; }
+.question-title { font-weight: 600; line-height: 1.5; }
+.answer-btn { line-height: 1.5; }
+.answer-btn:disabled { cursor: default; opacity: 1; }
+.answer-btn:focus-visible, .btn:focus-visible, a:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+.visuals { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; padding: 12px; background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; }
+.visuals figure { flex: 1 1 180px; max-width: 260px; margin: 0; }
+.visuals figcaption { text-align: center; font-size: 1.05rem; font-weight: 700; }
+.visuals svg { width: 100%; height: auto; display: block; }
+.visuals .syringe { flex-basis: 280px; max-width: 360px; }
+.visual-legend { color: #475569; font-size: .95rem; margin: 12px 0 24px; }
+@media(max-width:480px) {
+  .page { padding: 28px 14px 50px; }
+  .page-title h1 { font-size: 1.8rem; }
+  .quiz-card { padding: 20px 16px; }
+  .section-kicker { letter-spacing: .08em; }
+  .visuals figure { flex-basis: 100%; }
+}
